@@ -1,10 +1,10 @@
 ﻿using System;
 
-public class NoteTransformer
+class ConvertisseurNote
 {
-    public static string Transform(string note)
+    static string ConvertirNote(string noteAlphabetique)
     {
-        switch (note.ToUpper())
+        switch (noteAlphabetique.ToUpper())
         {
             case "A":
                 return "DO";
@@ -21,38 +21,79 @@ public class NoteTransformer
             case "G":
                 return "SI";
             default:
-                return "votre saisie est incorrecte. Veuillez entrer une option valide";
+                return "Note invalide";
         }
     }
 
-    public static void Main()
+    static string ConvertirNoteAlphabetique(string noteSyllabe)
+    {
+        switch (noteSyllabe.ToUpper())
+        {
+            case "DO":
+                return "A";
+            case "RÉ":
+                return "B";
+            case "MI":
+                return "C";
+            case "FA":
+                return "D";
+            case "SOL":
+                return "E";
+            case "LA":
+                return "F";
+            case "SI":
+                return "G";
+            default:
+                return "Note invalide";
+        }
+    }
+
+    static void Main(string[] args)
     {
         while (true)
         {
             Console.WriteLine("Quel type de conversion souhaitez-vous faire ?");
-            Console.WriteLine("1. NOTE => alphabétique vers note");
-            Console.WriteLine("2. QUITTER");
+            Console.WriteLine("1. NOTE (Note vers alphabétique)");
+            Console.WriteLine("2. ALPHABÉTIQUE (Alphabétique vers note)");
+            Console.WriteLine("3. QUITTER");
 
-            string choice = Console.ReadLine();
+            string choix = Console.ReadLine();
 
-            if (choice == "1")
+            if (choix == "1")
             {
-                Console.WriteLine("Veuillez entrer une note alphabétique entre (A, B, C, D, E, F, G) : ");
-                string input = Console.ReadLine();
+                while (true)
+                {
+                    Console.WriteLine("Veuillez entrer la note syllabe à convertir (DO, RÉ, MI, FA, SOL, LA, SI) :");
+                    string noteSyllabe = Console.ReadLine();
 
-                string note = Transform(input);
-                Console.WriteLine("La note correspondante est : " + note);
-
-                Console.WriteLine(); // Ligne vide pour la sépareration des résultats
+                    string noteAlphabetique = ConvertirNoteAlphabetique(noteSyllabe);
+                    Console.WriteLine($"La note alphabétique correspondante est : {noteAlphabetique}");
+                }
             }
-            else if (choice == "2")
+            else if (choix == "2")
+            {
+                while (true)
+                {
+                    Console.WriteLine("Veuillez entrer la note alphabétique à convertir (A, B, C, D, E, F, G) :");
+                    string noteAlphabetique = Console.ReadLine();
+
+                    if (noteAlphabetique.Length != 1 || !"ABCDEFG".Contains(noteAlphabetique.ToUpper()))
+                    {
+                        Console.WriteLine("Note invalide. Veuillez entrer une note alphabétique valide.");
+                        continue;
+                    }
+
+                    string noteSyllabe = ConvertirNote(noteAlphabetique);
+                    Console.WriteLine($"La note syllabe correspondante est : {noteSyllabe}");
+                }
+            }
+            else if (choix == "3")
             {
                 break;
             }
             else
             {
-                Console.WriteLine("selction invalide. Veuillez entrer une option valide.");
-                Console.WriteLine(); // Ligne vide pour la sépareration des résultats
+                Console.WriteLine("Choix invalide. Veuillez entrer un choix valide.");
             }
         }
     }
